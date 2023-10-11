@@ -12,10 +12,16 @@
     <h1 id="titleQuestion">Coding Challenge Quiz</h1>
     <p id="descriptionAnswers">Answer the following code-related questions within the time limit.<br> When you answer questions incorrectly you will be penalized by loosing 10 seconds.
     </p>
-    <button id="startQuiz" type="button">Start Quiz</button>
+    <div class="answerButtons" data-view="hidden">
+        <button id="answer1" type="button"></button>
+        <button id="answer2" type="button"></button>
+        <button id="answer3" type="button"></button>
+        <button id="answer4" type="button"></button>
+    </div>
+    <button id="startQuiz" type="button" data-view="visible">Start Quiz</button>
     <hr>
     <!-- update the data-answer to "wrong" or "correct" depending on the 'status' of the answer using data attributes -->
-    <div class="questionStatus" data-answer="correct">Correct!</div>
+    <div class="questionStatus" data-answer="correct"></div>
     <script src="./assets/script.js"></script>
 </body>
 </html>

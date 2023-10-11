@@ -1,7 +1,13 @@
 var startQuizBtn = document.querySelector("#startQuiz");
 var timerElement = document.querySelector("#timerCounter");
 var title = document.querySelector("#titleQuestion");
-var answers = document.querySelector("#descriptionAnswers");
+var description = document.querySelector("#descriptionAnswers");
+var answerButton1 = document.querySelector("#answer1");
+var answerButton2 = document.querySelector("#answer2");
+var answerButton3 = document.querySelector("#answer3");
+var answerButton4 = document.querySelector("#answer4");
+var answerButtons = document.querySelector(".answerButtons")
+
 
 var timer;
 var timerCount = 10;
@@ -33,9 +39,35 @@ let questions = [
 // Use a function to call a new question/card that will have eventListeners for where the user clicks. Depending on if it is the correct answer (add points to score) or the incorrect answer (subtract time from timer)
 
 function startQuiz(){
-    // title.setItem("titleQuestion");
+    // for (let i = 0; i < questions.length; i++) {
+    //     titleQuestion.textContent = questions[i].question;
+    //     description.textContent = "";
+    //     answerButton1.textContent = questions[i].answer1;
+    //     answerButton2.textContent = questions[i].answer2;
+    //     answerButton3.textContent = questions[i].answer3;
+    //     answerButton4.textContent = questions[i].answer4;
+    //     answerButton1.dataset.view = "visible";
+    //     answerButton2.dataset.view = "visible";
+    //     answerButton3.dataset.view = "visible";
+    //     answerButton4.dataset.view = "visible";
+    // }
+
     titleQuestion.textContent = questions[0].question;
-    descriptionAnswers.innerHTML = questions[0].answer1 + questions[0].answer2 + questions[0].answer3 + questions[0].answer4;
+    description.textContent = "";
+    answerButton1.textContent = questions[0].answer1;
+    answerButton2.textContent = questions[0].answer2;
+    answerButton3.textContent = questions[0].answer3;
+    answerButton4.textContent = questions[0].answer4;
+    answerButtons.dataset.view = "visible";
+    startQuizBtn.dataset.view = "hidden";
+    
+    // I tried to hide the buttons one by one, but I used the dataset in the div element of the button instead. I will keep this incase I need it in the future.
+    // answerButton1.dataset.view = "visible";
+    // answerButton2.dataset.view = "visible";
+    // answerButton3.dataset.view = "visible";
+    // answerButton4.dataset.view = "visible";
+    
+    // descriptionAnswers.innerHTML = questions[0].answer1 + questions[0].answer2 + questions[0].answer3 + questions[0].answer4;
     //this is not appearing how I would want it to appear so I think I will need to add HTML to this to make each answer a button
 }
 

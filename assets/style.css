@@ -1,0 +1,9 @@
+
+
+[data-view="hidden"] {
+    display: none;
+}
+
+[data-view="visible"] {
+    display: block;
+}
