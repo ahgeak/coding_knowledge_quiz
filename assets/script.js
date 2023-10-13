@@ -1,13 +1,14 @@
-var startQuizBtn = document.querySelector("#startQuiz");
-var timerElement = document.querySelector("#timerCounter");
-var title = document.querySelector("#titleQuestion");
-var description = document.querySelector("#descriptionAnswers");
-var answerButton1 = document.querySelector("#answer1");
-var answerButton2 = document.querySelector("#answer2");
-var answerButton3 = document.querySelector("#answer3");
-var answerButton4 = document.querySelector("#answer4");
-var answerButtons = document.querySelector(".answerButtons")
+var startQuizBtn = document.getElementById("startQuiz");
+var timerElement = document.getElementById("timerCounter");
+var title = document.getElementById("titleQuestion");
+var description = document.getElementById("descriptionAnswers");
+var answerButton1 = document.getElementById("answer1");
+var answerButton2 = document.getElementById("answer2");
+var answerButton3 = document.getElementById("answer3");
+var answerButton4 = document.getElementById("answer4");
 
+var answerButtons = document.querySelector(".answerButtons");
+//use getElementById
 
 var timer;
 var timerCount = 10;
@@ -31,10 +32,24 @@ let questions = [
         answer3: "3. parenthesis",
         answer4: "4. square brackets",
         correctAnswer: "2. curly brackets"
+    },
+    {
+        question: "",
+        answer1: "",
+        answer2: "",
+        answer3: "",
+        answer4: "",
+        correctAnswer: ""
+    },
+    {
+        question: "",
+        answer1: "",
+        answer2: "",
+        answer3: "",
+        answer4: "",
+        correctAnswer: ""
     }
 ]
-// console.log(JSON.stringify(questions[1]));
-
 
 // Use a function to call a new question/card that will have eventListeners for where the user clicks. Depending on if it is the correct answer (add points to score) or the incorrect answer (subtract time from timer)
 
@@ -69,6 +84,10 @@ function startQuiz(){
     
     // descriptionAnswers.innerHTML = questions[0].answer1 + questions[0].answer2 + questions[0].answer3 + questions[0].answer4;
     //this is not appearing how I would want it to appear so I think I will need to add HTML to this to make each answer a button
+}
+
+function quizQuestions () {
+    
 }
 
 // When the time runds out, trigger quizOver() to display final score and have a field that the user updates with their initials. The updated score will be added to the high score board
