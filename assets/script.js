@@ -17,7 +17,7 @@ var score = 0; //inital score is set to 0
 
 
 var timer;
-var timerCount = 2;
+var timerCount;
 
 // Create a score keeper that is updated after each answer is given. If correct answer is given add points to score, if the wrong answer is given subtract time
 
@@ -42,26 +42,27 @@ let questions = [
         // correctAnswer: 2. curly brackets
     },
     {
-        question: "",
-        answer1: "",
-        answer2: "",
-        answer3: "",
-        answer4: "",
-        correctAnswer: ""
+        question: "What does the DOM stand for in JavaScript?",
+        answer1: "Document Object Model",
+        answer2: "Data Object Model",
+        answer3: "Document Output Method",
+        answer4: "Document Object Manipulation",
+        correctAnswer: "answer1"
+        // correctAnswer: answer1: "Document Object Model"
     },
     {
-        question: "",
-        answer1: "",
-        answer2: "",
-        answer3: "",
-        answer4: "",
-        correctAnswer: ""
+        question: "What does HTML stand for?",
+        answer1: "Hyper Text Markup Language",
+        answer2: "High Technology Modern Language",
+        answer3: "Hyperlink and Text Management Language",
+        answer4: "Home Tool for Markup Language",
+        correctAnswer: "answer1"
     }
 ]
 
 // Use a function to call a new question/card that will have eventListeners for where the user clicks. Depending on if it is the correct answer (add points to score) or the incorrect answer (subtract time from timer)
 
-var currentQuestionNumber = 0;
+var currentQuestionNumber = 0; //this might be used to set a random number?
 
 function nextQuestion () {
     var randomQuestion = Math.floor(Math.random() * questions.length);
@@ -74,35 +75,14 @@ function nextQuestion () {
     answerButtons.dataset.view = "visible";
     startQuizBtn.dataset.view = "hidden";
 
-    currentCorrectAnswer = questions[0].correctAnswer;
+    currentCorrectAnswer = questions[randomQuestion].correctAnswer;
     return currentCorrectAnswer;
 }
 
 function startQuiz(){
-    // for (var i = 0 ; i < questions.length; i++) {
-    //     titleQuestion.textContent = questions[i].question;
-    //     description.textContent = "";
-    //     answerButton1.textContent = questions[i].answer1;
-    //     answerButton2.textContent = questions[i].answer2;
-    //     answerButton3.textContent = questions[i].answer3;
-    //     answerButton4.textContent = questions[i].answer4;
-    //     answerButtons.dataset.view = "visible";
-    // }
+    timerCount = 20;
     timerClock();
-
-    titleQuestion.textContent = questions[0].question;
-    description.textContent = "";
-    answerButton1.textContent = questions[0].answer1;
-    answerButton2.textContent = questions[0].answer2;
-    answerButton3.textContent = questions[0].answer3;
-    answerButton4.textContent = questions[0].answer4;
-    answerButtons.dataset.view = "visible";
-    startQuizBtn.dataset.view = "hidden";
-
-    nextQuestion ();
-
-    currentCorrectAnswer = questions[0].correctAnswer;
-    return currentCorrectAnswer;
+    nextQuestion();
 
     // I tried to hide the buttons one by one, but I used the dataset in the div element of the button instead. I will keep this incase I need it in the future.
     // answerButton1.dataset.view = "visible";
@@ -111,11 +91,10 @@ function startQuiz(){
     // answerButton4.dataset.view = "visible";
 }
 
-function addPoints(){
+// Maybe I can add the function below the answerButton eventListeners that I call to shorten code
+function checkCorrectAnswer (){
 
 }
-
-
 
 answerButton1.addEventListener("click", function(event) {
     console.log("You clicked button 1");
@@ -123,13 +102,12 @@ answerButton1.addEventListener("click", function(event) {
     var selectedAnswer = this.getAttribute("id");
 
     if (selectedAnswer === currentCorrectAnswer){
-        console.log("Correct!");
         answerStatus.textContent = "Correct!";
+        score += 10;
     } else {
-        console.log("Wrong!");
         answerStatus.textContent = "Wrong!";
     }
-    
+    nextQuestion();
 });
 
 
@@ -139,12 +117,12 @@ answerButton2.addEventListener("click", function() {
     var selectedAnswer = this.getAttribute("id");
 
     if (selectedAnswer === currentCorrectAnswer){
-        console.log("Correct!");
         answerStatus.textContent = "Correct!";
+        score += 10;
     } else {
-        console.log("Wrong!");
         answerStatus.textContent = "Wrong!";
     }
+    nextQuestion();
 });
 
 answerButton3.addEventListener("click", function(event) {
@@ -153,12 +131,12 @@ answerButton3.addEventListener("click", function(event) {
     var selectedAnswer = this.getAttribute("id");
 
     if (selectedAnswer === currentCorrectAnswer){
-        console.log("Correct!");
         answerStatus.textContent = "Correct!";
+        score += 10;
     } else {
-        console.log("Wrong!");
         answerStatus.textContent = "Wrong!";
     }
+    nextQuestion();
 });
 
 answerButton4.addEventListener("click", function() {
@@ -167,20 +145,17 @@ answerButton4.addEventListener("click", function() {
     var selectedAnswer = this.getAttribute("id");
 
     if (selectedAnswer === currentCorrectAnswer){
-        console.log("Correct!");
         answerStatus.textContent = "Correct!";
+        score += 10;
     } else {
-        console.log("Wrong!");
         answerStatus.textContent = "Wrong!";
     }
+    nextQuestion();
 });
-
 
 
 function quizQuestions () {
 }
-
-// When the time runds out, trigger quizOver() to display final score and have a field that the user updates with their initials. The updated score will be added to the high score board
 
 // Use localStorage to keep all of high scores. On the score board there will be two buttons "Go Back" which will return to start function and "Clear Score" that will empty the localStorage
 
@@ -199,11 +174,10 @@ function timerClock() {
     }, 1000);
 }
 
-
+// When the time runs out, trigger quizOver() to display final score and have a field that the user updates with their initials. The updated score will be added to the high score board
 function quizOver() {
     title.textContent = "All Done!"
     description.textContent = "Your final score is: " + score;
-    // description.innerHTML += <br></br>"Please enter your initials: ";
     enterInitials.dataset.view = "visible";
     answerButtons.dataset.view = "hidden";
     answerStatus.textContent = "";
