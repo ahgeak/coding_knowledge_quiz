@@ -6,12 +6,18 @@ var answerButton1 = document.getElementById("answer1");
 var answerButton2 = document.getElementById("answer2");
 var answerButton3 = document.getElementById("answer3");
 var answerButton4 = document.getElementById("answer4");
+var answerStatus = document.getElementById("answerStatus");
+var enterInitials = document.getElementById("enterInitials");
 
 var answerButtons = document.querySelector(".answerButtons");
 //use getElementById
 
+var isQuizOver = false; // varible used to see if the quiz is over
+var score = 0; //inital score is set to 0
+
+
 var timer;
-var timerCount = 10;
+var timerCount = 2;
 
 // Create a score keeper that is updated after each answer is given. If correct answer is given add points to score, if the wrong answer is given subtract time
 
@@ -32,7 +38,8 @@ let questions = [
         answer2: "2. curly brackets",
         answer3: "3. parenthesis",
         answer4: "4. square brackets",
-        correctAnswer: "2. curly brackets"
+        correctAnswer: "answer2"
+        // correctAnswer: 2. curly brackets
     },
     {
         question: "",
@@ -56,6 +63,21 @@ let questions = [
 
 var currentQuestionNumber = 0;
 
+function nextQuestion () {
+    var randomQuestion = Math.floor(Math.random() * questions.length);
+    titleQuestion.textContent = questions[randomQuestion].question;
+    description.textContent = "";
+    answerButton1.textContent = questions[randomQuestion].answer1;
+    answerButton2.textContent = questions[randomQuestion].answer2;
+    answerButton3.textContent = questions[randomQuestion].answer3;
+    answerButton4.textContent = questions[randomQuestion].answer4;
+    answerButtons.dataset.view = "visible";
+    startQuizBtn.dataset.view = "hidden";
+
+    currentCorrectAnswer = questions[0].correctAnswer;
+    return currentCorrectAnswer;
+}
+
 function startQuiz(){
     // for (var i = 0 ; i < questions.length; i++) {
     //     titleQuestion.textContent = questions[i].question;
@@ -66,6 +88,7 @@ function startQuiz(){
     //     answerButton4.textContent = questions[i].answer4;
     //     answerButtons.dataset.view = "visible";
     // }
+    timerClock();
 
     titleQuestion.textContent = questions[0].question;
     description.textContent = "";
@@ -75,6 +98,8 @@ function startQuiz(){
     answerButton4.textContent = questions[0].answer4;
     answerButtons.dataset.view = "visible";
     startQuizBtn.dataset.view = "hidden";
+
+    nextQuestion ();
 
     currentCorrectAnswer = questions[0].correctAnswer;
     return currentCorrectAnswer;
@@ -86,6 +111,12 @@ function startQuiz(){
     // answerButton4.dataset.view = "visible";
 }
 
+function addPoints(){
+
+}
+
+
+
 answerButton1.addEventListener("click", function(event) {
     console.log("You clicked button 1");
 
@@ -93,8 +124,10 @@ answerButton1.addEventListener("click", function(event) {
 
     if (selectedAnswer === currentCorrectAnswer){
         console.log("Correct!");
+        answerStatus.textContent = "Correct!";
     } else {
         console.log("Wrong!");
+        answerStatus.textContent = "Wrong!";
     }
     
 });
@@ -107,8 +140,10 @@ answerButton2.addEventListener("click", function() {
 
     if (selectedAnswer === currentCorrectAnswer){
         console.log("Correct!");
+        answerStatus.textContent = "Correct!";
     } else {
         console.log("Wrong!");
+        answerStatus.textContent = "Wrong!";
     }
 });
 
@@ -119,20 +154,24 @@ answerButton3.addEventListener("click", function(event) {
 
     if (selectedAnswer === currentCorrectAnswer){
         console.log("Correct!");
+        answerStatus.textContent = "Correct!";
     } else {
         console.log("Wrong!");
+        answerStatus.textContent = "Wrong!";
     }
 });
 
 answerButton4.addEventListener("click", function() {
     console.log("You clicked button 4");
-    
+
     var selectedAnswer = this.getAttribute("id");
 
     if (selectedAnswer === currentCorrectAnswer){
         console.log("Correct!");
+        answerStatus.textContent = "Correct!";
     } else {
         console.log("Wrong!");
+        answerStatus.textContent = "Wrong!";
     }
 });
 
@@ -159,9 +198,15 @@ function timerClock() {
         }
     }, 1000);
 }
-timerClock();
+
 
 function quizOver() {
+    title.textContent = "All Done!"
+    description.textContent = "Your final score is: " + score;
+    // description.innerHTML += <br></br>"Please enter your initials: ";
+    enterInitials.dataset.view = "visible";
+    answerButtons.dataset.view = "hidden";
+    answerStatus.textContent = "";
     console.log("the quiz is over");
 }
 
