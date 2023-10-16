@@ -8,15 +8,21 @@ var answerButton3 = document.getElementById("answer3");
 var answerButton4 = document.getElementById("answer4");
 var answerStatus = document.getElementById("answerStatus");
 var enterInitials = document.getElementById("enterInitials");
+var initialsInput = document.getElementById("initials");
+// var initialsInput = document.querySelector("#initials");
+var initialsSubmit = document.getElementById("initialsSubmit");
+var highScoreBtns = document.getElementById("highScoreBtns");
+var goBack = document.getElementById("goBack");
 
 var answerButtons = document.querySelector(".answerButtons");
-//use getElementById
+//use getElementById?
 
-var isQuizOver = false; // varible used to see if the quiz is over
 var score = 0; //inital score is set to 0
 
 var timer;
 var timerCount;
+
+var highScoreArr = [];
 
 // Create a score keeper that is updated after each answer is given. If correct answer is given add points to score, if the wrong answer is given subtract time
 
@@ -82,7 +88,6 @@ function nextQuestion () {
         startQuizBtn.dataset.view = "hidden";
 
         currentCorrectAnswer = questions[randomQuestion].correctAnswer;
-
         
         console.log(remainingQuestions);
         remainingQuestions.splice(randomQuestion, 1);
@@ -171,10 +176,6 @@ answerButton4.addEventListener("click", function() {
     nextQuestion();
 });
 
-
-function quizQuestions () {
-}
-
 // Use localStorage to keep all of high scores. On the score board there will be two buttons "Go Back" which will return to start function and "Clear Score" that will empty the localStorage
 
 // View high scores will be a link that can be clicked at any time to end the game and take the user to the scoreboard
@@ -184,7 +185,6 @@ function timerClock() {
     timer = setInterval(function() {
         timerCount--;
         timerElement.textContent = timerCount;
-    // Might need to add a condition here that checks if correct answer is given and update the timer
         if (timerCount === 0) {
             clearInterval(timer);
             quizOver();
@@ -199,7 +199,47 @@ function quizOver() {
     enterInitials.dataset.view = "visible";
     answerButtons.dataset.view = "hidden";
     answerStatus.textContent = "";
-    console.log("the quiz is over");
 }
 
+function updateHighScore(){
+    var highScore = {
+            name: initialsInput.value.trim(),
+            score: score
+        };
+    localStorage.setItem("highScore", JSON.stringify(highScore));
+    highScoreArr.splice (highScoreArr, highScore);
+    console.log(highScoreArr);
+    highScoreScreen();
+    listHighScores();
+}
+
+function listHighScores() {
+    for (var i = 0; i < highScoreArr.length; i++) {
+        var theScore = highScoreArr[i];
+    
+        var li = document.createElement("li");
+        li.textContent = theScore;
+        li.setAttribute("data-view", "visible");
+    
+        listOfHighScores.appendChild(li);
+      }
+}
+
+function highScoreScreen() {
+    title.textContent =  "High Scores"
+    description.textContent = "";
+    enterInitials.dataset.view = "hidden";
+    var storedScores = JSON.parse(localStorage.getItem("highScore"));
+    if (storedScores !== null){
+        highScoreArr = storedScores;
+    }
+    listHighScores();
+    highScoreBtns.dataset.view = "visible";
+}
+
+initialsSubmit.addEventListener("click", updateHighScore);
+
+goBack.addEventListener("click", startQuiz); // this needs to be fixed go to reset the quiz
+
+// start button that will start the quiz
 startQuizBtn.addEventListener("click", startQuiz);

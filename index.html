@@ -15,9 +15,17 @@
     <div id="enterInitials" data-view="hidden">
         <form>
             <label for="initials">Please enter your initials:</label>
-            <input type="text" />
-            <button id="initialSubmit" type="button">Submit</button>
+            <input type="text" id="initials" />
+            <button id="initialsSubmit" type="button">Submit</button>
         </form>
+    </div>
+    <div>
+        <ol id="listOfHighScores" data-view="hidden">
+        </ol>
+    </div>
+    <div id="highScoreBtns" data-view="hidden">
+        <button id="goBack" type="button">Go Back</button>
+        <button id="clearHighScore" type="button">Clear High Score</button>
     </div>
     <div class="answerButtons" data-view="hidden">
         <button id="answer1" type="button"></button>
