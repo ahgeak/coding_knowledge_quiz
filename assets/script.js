@@ -15,7 +15,6 @@ var answerButtons = document.querySelector(".answerButtons");
 var isQuizOver = false; // varible used to see if the quiz is over
 var score = 0; //inital score is set to 0
 
-
 var timer;
 var timerCount;
 
@@ -60,23 +59,38 @@ let questions = [
     }
 ]
 
+// let remainingQuestions = questions;
+// console.log(remainingQuestions);
+// remainingQuestions.splice(randomQuestion, 1);
+
 // Use a function to call a new question/card that will have eventListeners for where the user clicks. Depending on if it is the correct answer (add points to score) or the incorrect answer (subtract time from timer)
 
 var currentQuestionNumber = 0; //this might be used to set a random number?
 
-function nextQuestion () {
-    var randomQuestion = Math.floor(Math.random() * questions.length);
-    titleQuestion.textContent = questions[randomQuestion].question;
-    description.textContent = "";
-    answerButton1.textContent = questions[randomQuestion].answer1;
-    answerButton2.textContent = questions[randomQuestion].answer2;
-    answerButton3.textContent = questions[randomQuestion].answer3;
-    answerButton4.textContent = questions[randomQuestion].answer4;
-    answerButtons.dataset.view = "visible";
-    startQuizBtn.dataset.view = "hidden";
+var remainingQuestions = questions;
 
-    currentCorrectAnswer = questions[randomQuestion].correctAnswer;
-    return currentCorrectAnswer;
+function nextQuestion () {
+    if (timerCount > 0 && remainingQuestions.length > 0){
+        var randomQuestion = Math.floor(Math.random() * questions.length);
+        titleQuestion.textContent = questions[randomQuestion].question;
+        description.textContent = "";
+        answerButton1.textContent = questions[randomQuestion].answer1;
+        answerButton2.textContent = questions[randomQuestion].answer2;
+        answerButton3.textContent = questions[randomQuestion].answer3;
+        answerButton4.textContent = questions[randomQuestion].answer4;
+        answerButtons.dataset.view = "visible";
+        startQuizBtn.dataset.view = "hidden";
+
+        currentCorrectAnswer = questions[randomQuestion].correctAnswer;
+
+        
+        console.log(remainingQuestions);
+        remainingQuestions.splice(randomQuestion, 1);
+        return currentCorrectAnswer;
+    } else {
+        quizOver();
+    }
+    
 }
 
 function startQuiz(){
@@ -106,6 +120,7 @@ answerButton1.addEventListener("click", function(event) {
         score += 10;
     } else {
         answerStatus.textContent = "Wrong!";
+        timerCount -= 5;
     }
     nextQuestion();
 });
@@ -121,6 +136,7 @@ answerButton2.addEventListener("click", function() {
         score += 10;
     } else {
         answerStatus.textContent = "Wrong!";
+        timerCount -= 5;
     }
     nextQuestion();
 });
@@ -135,6 +151,7 @@ answerButton3.addEventListener("click", function(event) {
         score += 10;
     } else {
         answerStatus.textContent = "Wrong!";
+        timerCount -= 5;
     }
     nextQuestion();
 });
@@ -149,6 +166,7 @@ answerButton4.addEventListener("click", function() {
         score += 10;
     } else {
         answerStatus.textContent = "Wrong!";
+        timerCount -= 5;
     }
     nextQuestion();
 });
