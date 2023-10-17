@@ -10,7 +10,7 @@ Creating this project I learned about getElementById, creating and calling funct
 
 ## Usage
 
-Deployed URL: 
+Deployed URL: https://ahgeak.github.io/coding_knowledge_quiz/ 
 
 GitHub Repository URL: https://github.com/ahgeak/coding_knowledge_quiz 
 
