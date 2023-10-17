@@ -1,4 +1,61 @@
+.contentContainer {
+    display: flex;
+    padding: .5 em;
+    flex-direction: column;
+}
 
+.header {
+    display: flex;
+    
+}
+
+#titleQuestion, #descriptionAnswers, #answerStatus {
+    display: flex;
+    justify-content: center;
+}
+
+#highScoreLink {
+    display: flex;
+    justify-content: flex-start;
+    padding: 1em;
+}
+
+#timer, #timerCounter {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em;
+}
+
+.answerButtons {
+    display: flex;
+}
+
+#answer1, #answer2, #answer3, #answer4 {
+    display: flex;
+    margin-left: 5em;
+    margin-top: .5em;
+    padding: .5em;
+    width: 35%;
+}
+
+button {
+    background-color: blueviolet;
+    color: white;
+    border-radius: 25px;
+    padding: .5em;
+}
+
+#startQuiz {
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: .5em;
+}
+
+#enterInitials {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 [data-view="hidden"] {
     display: none;

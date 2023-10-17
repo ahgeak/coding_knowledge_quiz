@@ -9,10 +9,11 @@ var answerButton4 = document.getElementById("answer4");
 var answerStatus = document.getElementById("answerStatus");
 var enterInitials = document.getElementById("enterInitials");
 var initialsInput = document.getElementById("initials");
-// var initialsInput = document.querySelector("#initials");
 var initialsSubmit = document.getElementById("initialsSubmit");
 var highScoreBtns = document.getElementById("highScoreBtns");
 var goBack = document.getElementById("goBack");
+var clearHighScore = document.getElementById("clearHighScore");
+var listOfHighScores = document.getElementById("listOfHighScores");
 
 var answerButtons = document.querySelector(".answerButtons");
 //use getElementById?
@@ -30,19 +31,19 @@ var highScoreArr = [];
 let questions = [
     {
         question: "Commonly used data types DO NOT include:",
-        answer1: "1. strings",
-        answer2: "2. booleans",
-        answer3: "3. alerts",
-        answer4: "4. numbers",
+        answer1: "strings",
+        answer2: "booleans",
+        answer3: "alerts",
+        answer4: "numbers",
         correctAnswer: "answer3"
         // correctAnswer: "3. alerts"
     },
     {
         question: "The condition in an if/else statement is enclosed with ______.",
-        answer1: "1. quotes",
-        answer2: "2. curly brackets",
-        answer3: "3. parenthesis",
-        answer4: "4. square brackets",
+        answer1: "quotes",
+        answer2: "curly brackets",
+        answer3: "parenthesis",
+        answer4: "square brackets",
         correctAnswer: "answer2"
         // correctAnswer: 2. curly brackets
     },
@@ -61,6 +62,70 @@ let questions = [
         answer2: "High Technology Modern Language",
         answer3: "Hyperlink and Text Management Language",
         answer4: "Home Tool for Markup Language",
+        correctAnswer: "answer1"
+    },
+    {
+        question: "What will be the result of 3 + '3' in JavaScript?",
+        answer1: "33",
+        answer2: "6",
+        answer3: "'33'",
+        answer4: "36",
+        correctAnswer: "answer3"
+    },
+    {
+        question: "Which HTML element is used to define the structure of an HTML document?",
+        answer1: "<structure>",
+        answer2: "<html>",
+        answer3: "<body>",
+        answer4: "<layout>",
+        correctAnswer: "answer2"
+    },
+    {
+        question: "What does the <br> tag do in HTML?",
+        answer1: "Adds a bullet point",
+        answer2: "Creates a line break",
+        answer3: "Makes text bold",
+        answer4: "Inserts an image",
+        correctAnswer: "answer2"
+    },
+    {
+        question: "Which CSS property is used to change the text color of an element?",
+        answer1: "font-color",
+        answer2: "text-color",
+        answer3: "color",
+        answer4: "text-style",
+        correctAnswer: "answer3"
+    },
+    {
+        question: "What does the 'C' stand for in CSS?",
+        answer1: "Cascading",
+        answer2: "Colorful",
+        answer3: "Creative",
+        answer4: "Computer",
+        correctAnswer: "answer1"
+    },
+    {
+        question: "How can you center-align an element horizontally in CSS?",
+        answer1: "center-align: horizontal;",
+        answer2: "align: center;",
+        answer3: "horizontal-align: center;",
+        answer4: "text-align: center;",
+        correctAnswer: "answer4"
+    },
+    {
+        question: "Which CSS property is used to add space around the content of an element?",
+        answer1: "margin",
+        answer2: "padding",
+        answer3: "spacing",
+        answer4: "border-spacing",
+        correctAnswer: "answer2"
+    },
+    {
+        question: "Which tag is used to create a hyperlink in HTML?",
+        answer1: "<link>",
+        answer2: "<a>",
+        answer3: "<href>",
+        answer4: "<url>",
         correctAnswer: "answer1"
     }
 ]
@@ -108,6 +173,9 @@ function startQuiz(){
     // answerButton2.dataset.view = "visible";
     // answerButton3.dataset.view = "visible";
     // answerButton4.dataset.view = "visible";
+    goBack.dataset.view = "hidden";
+    clearHighScore.dataset.view = "hidden";
+    enterInitials.dataset.view = "hidden";
 }
 
 // Maybe I can add the function below the answerButton eventListeners that I call to shorten code
@@ -185,7 +253,7 @@ function timerClock() {
     timer = setInterval(function() {
         timerCount--;
         timerElement.textContent = timerCount;
-        if (timerCount === 0) {
+        if (timerCount <= 0) {
             clearInterval(timer);
             quizOver();
         }
@@ -207,8 +275,8 @@ function updateHighScore(){
             score: score
         };
     localStorage.setItem("highScore", JSON.stringify(highScore));
-    highScoreArr.splice (highScoreArr, highScore);
-    console.log(highScoreArr);
+    highScoreArr.splice(highScoreArr, highScore);
+    console.log(highScoreArr, " this is the high score array");
     highScoreScreen();
     listHighScores();
 }
@@ -220,7 +288,7 @@ function listHighScores() {
         var li = document.createElement("li");
         li.textContent = theScore;
         li.setAttribute("data-view", "visible");
-    
+        
         listOfHighScores.appendChild(li);
       }
 }
@@ -235,6 +303,9 @@ function highScoreScreen() {
     }
     listHighScores();
     highScoreBtns.dataset.view = "visible";
+    goBack.dataset.view = "visible";
+    clearHighScore.dataset.view = "visible";
+
 }
 
 initialsSubmit.addEventListener("click", updateHighScore);
