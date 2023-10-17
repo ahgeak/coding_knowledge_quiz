@@ -16,18 +16,13 @@ var clearHighScore = document.getElementById("clearHighScore");
 var listOfHighScores = document.getElementById("listOfHighScores");
 
 var answerButtons = document.querySelector(".answerButtons");
-//use getElementById?
 
-var score = 0; //inital score is set to 0
+var score = 0; // inital score is set to 0
+var timer; // timer variable
+var timerCount;  // time left on clock variable
+var highScoreArr = []; // array to store high scores
 
-var timer;
-var timerCount;
-
-var highScoreArr = [];
-
-// Create a score keeper that is updated after each answer is given. If correct answer is given add points to score, if the wrong answer is given subtract time
-
-// Object array that holds all of the questions, answers and which is the correct answer
+// Object array that holds all of the questions, answers and the correct answer
 let questions = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -36,7 +31,6 @@ let questions = [
         answer3: "alerts",
         answer4: "numbers",
         correctAnswer: "answer3"
-        // correctAnswer: "3. alerts"
     },
     {
         question: "The condition in an if/else statement is enclosed with ______.",
@@ -45,7 +39,6 @@ let questions = [
         answer3: "parenthesis",
         answer4: "square brackets",
         correctAnswer: "answer2"
-        // correctAnswer: 2. curly brackets
     },
     {
         question: "What does the DOM stand for in JavaScript?",
@@ -54,7 +47,6 @@ let questions = [
         answer3: "Document Output Method",
         answer4: "Document Object Manipulation",
         correctAnswer: "answer1"
-        // correctAnswer: answer1: "Document Object Model"
     },
     {
         question: "What does HTML stand for?",
@@ -130,19 +122,13 @@ let questions = [
     }
 ]
 
-// let remainingQuestions = questions;
-// console.log(remainingQuestions);
-// remainingQuestions.splice(randomQuestion, 1);
+var remainingQuestions = questions; // variable to store the questions that are left in the quiz
 
-// Use a function to call a new question/card that will have eventListeners for where the user clicks. Depending on if it is the correct answer (add points to score) or the incorrect answer (subtract time from timer)
-
-var currentQuestionNumber = 0; //this might be used to set a random number?
-
-var remainingQuestions = questions;
-
+// nextQuestion is called to display a random question then remove that question from the remainingQuestion array and return the value of the currentCorrectAnswer. If the timer is over and the remainingQuestions array is empty, the quiz will end
 function nextQuestion () {
     if (timerCount > 0 && remainingQuestions.length > 0){
         var randomQuestion = Math.floor(Math.random() * questions.length);
+        
         titleQuestion.textContent = questions[randomQuestion].question;
         description.textContent = "";
         answerButton1.textContent = questions[randomQuestion].answer1;
@@ -154,40 +140,27 @@ function nextQuestion () {
 
         currentCorrectAnswer = questions[randomQuestion].correctAnswer;
         
-        console.log(remainingQuestions);
         remainingQuestions.splice(randomQuestion, 1);
         return currentCorrectAnswer;
     } else {
         quizOver();
     }
-    
 }
 
+// startQuiz sets the time, calls the next question and removes elements from the start screen from view
 function startQuiz(){
-    timerCount = 20;
+    timerCount = 100;
     timerClock();
     nextQuestion();
 
-    // I tried to hide the buttons one by one, but I used the dataset in the div element of the button instead. I will keep this incase I need it in the future.
-    // answerButton1.dataset.view = "visible";
-    // answerButton2.dataset.view = "visible";
-    // answerButton3.dataset.view = "visible";
-    // answerButton4.dataset.view = "visible";
     goBack.dataset.view = "hidden";
     clearHighScore.dataset.view = "hidden";
     enterInitials.dataset.view = "hidden";
 }
 
-// Maybe I can add the function below the answerButton eventListeners that I call to shorten code
-function checkCorrectAnswer (){
-
-}
-
+// The following evenListeners listen for user clicks. Depending on if it is the correct answer (add points to score) or the incorrect answer (subtract time from timer).
 answerButton1.addEventListener("click", function(event) {
-    console.log("You clicked button 1");
-
     var selectedAnswer = this.getAttribute("id");
-
     if (selectedAnswer === currentCorrectAnswer){
         answerStatus.textContent = "Correct!";
         score += 10;
@@ -198,12 +171,8 @@ answerButton1.addEventListener("click", function(event) {
     nextQuestion();
 });
 
-
 answerButton2.addEventListener("click", function() {
-    console.log("You clicked button 2");
-
     var selectedAnswer = this.getAttribute("id");
-
     if (selectedAnswer === currentCorrectAnswer){
         answerStatus.textContent = "Correct!";
         score += 10;
@@ -215,10 +184,7 @@ answerButton2.addEventListener("click", function() {
 });
 
 answerButton3.addEventListener("click", function(event) {
-    console.log("You clicked button 3");
-
     var selectedAnswer = this.getAttribute("id");
-
     if (selectedAnswer === currentCorrectAnswer){
         answerStatus.textContent = "Correct!";
         score += 10;
@@ -230,10 +196,7 @@ answerButton3.addEventListener("click", function(event) {
 });
 
 answerButton4.addEventListener("click", function() {
-    console.log("You clicked button 4");
-
     var selectedAnswer = this.getAttribute("id");
-
     if (selectedAnswer === currentCorrectAnswer){
         answerStatus.textContent = "Correct!";
         score += 10;
@@ -243,10 +206,6 @@ answerButton4.addEventListener("click", function() {
     }
     nextQuestion();
 });
-
-// Use localStorage to keep all of high scores. On the score board there will be two buttons "Go Back" which will return to start function and "Clear Score" that will empty the localStorage
-
-// View high scores will be a link that can be clicked at any time to end the game and take the user to the scoreboard
 
 // timer function that keeps the time. When the time runs out, it calls the quizOver function
 function timerClock() {
@@ -262,7 +221,7 @@ function timerClock() {
 
 // When the time runs out, trigger quizOver() to display final score and have a field that the user updates with their initials. The updated score will be added to the high score board
 function quizOver() {
-    title.textContent = "All Done!"
+    title.textContent = "All Done!";
     description.textContent = "Your final score is: " + score;
     enterInitials.dataset.view = "visible";
     answerButtons.dataset.view = "hidden";
@@ -290,11 +249,12 @@ function listHighScores() {
         li.setAttribute("data-view", "visible");
         
         listOfHighScores.appendChild(li);
+        listOfHighScores.dataset.view = "visible";
       }
 }
 
 function highScoreScreen() {
-    title.textContent =  "High Scores"
+    title.textContent =  "High Scores";
     description.textContent = "";
     enterInitials.dataset.view = "hidden";
     var storedScores = JSON.parse(localStorage.getItem("highScore"));
@@ -308,9 +268,11 @@ function highScoreScreen() {
 
 }
 
+// eventListener for user to enter their initials
 initialsSubmit.addEventListener("click", updateHighScore);
 
-goBack.addEventListener("click", startQuiz); // this needs to be fixed go to reset the quiz
+// go back button that intializes startQuiz()
+goBack.addEventListener("click", startQuiz);
 
 // start button that will start the quiz
 startQuizBtn.addEventListener("click", startQuiz);

@@ -1,3 +1,4 @@
+/* content container */
 .contentContainer {
     display: flex;
     padding: .5 em;
@@ -5,10 +6,10 @@
 }
 
 .header {
-    display: flex;
-    
+    display: flex;  
 }
 
+/* elements in container */
 #titleQuestion, #descriptionAnswers, #answerStatus {
     display: flex;
     justify-content: center;
@@ -30,6 +31,7 @@
     display: flex;
 }
 
+/* question answer buttons */
 #answer1, #answer2, #answer3, #answer4 {
     display: flex;
     margin-left: 5em;
@@ -45,6 +47,11 @@ button {
     padding: .5em;
 }
 
+button:hover {
+    background-color: darkorange;
+}
+
+/* start quiz button */
 #startQuiz {
     width: 25%;
     margin-left: auto;
@@ -52,15 +59,18 @@ button {
     padding: .5em;
 }
 
+/*input firld for initals */
 #enterInitials {
     margin-left: auto;
     margin-right: auto;
 }
 
+/* hide elements */
 [data-view="hidden"] {
     display: none;
 }
 
+/* make elements visible */
 [data-view="visible"] {
     display: block;
 }
